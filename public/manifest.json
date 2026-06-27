@@ -1,0 +1,16 @@
+{
+  "name": "Rizky Akbar Siregar | Portfolio",
+  "short_name": "Rizky Siregar",
+  "description": "Portfolio resmi Rizky Akbar Siregar — Full-Stack Developer",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0f",
+  "theme_color": "#6c63ff",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
