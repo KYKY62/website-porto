@@ -1,37 +1,21 @@
-import { useEffect, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { gsap } from 'gsap';
+import { Link, Navigate, useLocation } from 'react-router-dom';
+import { Header, Footer } from '../components/RetroUI';
 import projects from '../data/projects';
+import { findProject, projectPath } from '../seo/paths';
+import { getImageProps } from '../utils/projectImages';
+import NotFoundPage from './NotFoundPage';
 import './DetailPage.css';
 
 function DetailPage() {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const cardRef = useRef(null);
-  const project = projects.find((p) => p.id === id);
-
-  useEffect(() => {
-    if (cardRef.current) {
-      gsap.fromTo(
-        cardRef.current,
-        { opacity: 0, y: 60, scale: 0.96 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'power3.out', delay: 0.1 }
-      );
-    }
-  }, [project]);
+  const location = useLocation();
+  const project = findProject(projects, location.pathname);
 
   if (!project) {
-    return (
-      <div className="detail-page">
-        <div className="not-found">
-          <h2>Project Not Found</h2>
-          <p>The project you are looking for does not exist.</p>
-          <button className="back-btn" style={{ position: 'relative', top: 0, left: 0 }} onClick={() => navigate('/')}>
-            Go Back
-          </button>
-        </div>
-      </div>
-    );
+    return <NotFoundPage />;
+  }
+
+  if (location.pathname !== projectPath(project)) {
+    return <Navigate replace to={`${projectPath(project)}${location.search}${location.hash}`} />;
   }
 
   const actions = [];
@@ -79,15 +63,17 @@ function DetailPage() {
   }
 
   return (
-    <div className="detail-page">
-      <button className="back-btn" onClick={() => navigate(-1)}>
-        &larr; Back
-      </button>
+    <div id="top"><Header/><main className="detail-page">
+      <nav aria-label="Breadcrumb" className="breadcrumbs">
+        <Link to="/">Home</Link><span aria-hidden="true">/</span>
+        <Link to="/projects">Projects</Link><span aria-hidden="true">/</span>
+        <span aria-current="page">{project.title}</span>
+      </nav>
 
-      <div className="detail-container" ref={cardRef}>
+      <div className="detail-container">
         <div className="detail-card">
           <div className="detail-hero-img">
-            <img src={project.images[0]} alt={project.title} />
+            <img {...getImageProps(project.images[0], { detail: true })} alt={`${project.title} application interface`} loading="eager" fetchPriority="high" />
           </div>
 
           <div className="detail-body">
@@ -104,7 +90,7 @@ function DetailPage() {
             {project.images.length > 1 && (
               <div className="detail-gallery">
                 {project.images.slice(1).map((img, i) => (
-                  <img key={i} src={img} alt={`${project.title} screenshot ${i + 1}`} loading="lazy" />
+                  <img key={i} {...getImageProps(img, { detail: true })} alt={`${project.title} additional screenshot ${i + 1}`} loading="lazy" />
                 ))}
               </div>
             )}
@@ -128,7 +114,13 @@ function DetailPage() {
           </div>
         </div>
       </div>
-    </div>
+      <section className="related-projects" aria-labelledby="related-heading">
+        <h2 id="related-heading">More projects</h2>
+        <ul>{projects.filter((item) => item.id !== project.id).sort((a, b) =>
+          b.stack.filter((tech) => project.stack.includes(tech)).length - a.stack.filter((tech) => project.stack.includes(tech)).length
+        ).slice(0, 3).map((item) => <li key={item.id}><Link to={projectPath(item)}>{item.title} ↗</Link></li>)}</ul>
+      </section>
+    </main><Footer/></div>
   );
 }
 

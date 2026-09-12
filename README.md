@@ -1,16 +1,45 @@
-# React + Vite
+# Rizky Akbar Siregar — Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Portfolio React + Vite dengan UI retro pixel, metadata dinamis, dan HTML statis per halaman.
 
-Currently, two official plugins are available:
+## Pengembangan
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```sh
+npm install
+npm run dev
+```
 
-## React Compiler
+## Build dan pemeriksaan SEO
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```sh
+npm run build
+npm run test:seo
+npm run lint
+npm run preview
+```
 
-## Expanding the Oxlint configuration
+`build` menghasilkan `dist/` dan `.vercel/output/`, termasuk 16 halaman publik saat ini, sitemap, robots, redirect URL lama, serta halaman HTTP 404. `preview` menjalankan server lokal di port 4173 yang mengikuti aturan status/redirect produksi; development Vite tidak digunakan untuk menilai HTTP SEO.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+Domain default: `https://rizkyakbar.net`. Salin `.env.example` ke `.env.local` untuk mengganti `VITE_SITE_URL` sebelum build. Preview Vercel otomatis noindex; produksi harus indexable.
+
+## Memperbarui portfolio
+
+Konten berada di `src/data/projects.js`. Tambahkan field `seo` opsional untuk mengganti title, description, canonicalUrl, ogImage, ogTitle, dan ogDescription. Sitemap dibuat ulang dari data saat build. Screenshot baru/berubah memerlukan:
+
+```sh
+npm run images:optimize
+```
+
+Perintah optimasi memerlukan Python + Pillow. Salinan gambar dan metadata yang dihasilkan disimpan dalam repository; build deployment hanya memerlukan Node dan dependency npm yang sudah ada. File gambar asli tidak ditimpa.
+
+## Deployment
+
+`vercel.json` menggunakan Build Output API dengan route eksplisit; jangan menambahkan rewrite SPA global. Untuk hosting lain, adaptasi routing ke file HTML dan status 404 yang benar. Tidak ada deploy otomatis yang dilakukan melalui task ini.
+
+Setelah deploy, jalankan pemeriksaan HTTP read-only:
+
+```sh
+npm run check:seo:live -- https://rizkyakbar.net
+```
+
+Lihat [audit, daftar file, panduan metadata, checklist pengujian, dan Search Console](docs/SEO-AUDIT.md).
