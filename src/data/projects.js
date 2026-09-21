@@ -1,7 +1,7 @@
 import multisite from "../assets/multisite.webp";
 import diskominfosuperapp from "../assets/diskominfosuperapp.webp";
-import langkat from "../assets/cctv.webp";
-import langkatcctv from "../assets/portallangkat.webp";
+import langkatcctv from "../assets/cctv.webp";
+import langkat from "../assets/portallangkat.webp";
 import stamet from "../assets/stamet.webp";
 import quran from "../assets/quran.webp";
 import mybidan from "../assets/mybidan.webp";
@@ -9,6 +9,9 @@ import quizkuy from "../assets/quizkuy.webp";
 import getjadwal from "../assets/getJadwal.webp";
 import noimage from "../assets/noimage.webp";
 import siap from "../assets/siap.webp";
+import tracer from "../assets/tracer-study.webp";
+import library from "../assets/library.webp";
+import akbid from "../assets/akbid.webp";
 
 const projects = [
   {
@@ -65,8 +68,8 @@ const projects = [
   {
     id: "Akademi Kebidanan Langkat",
     title: "Akademi Kebidanan Langkat",
-    thumbnail: noimage,
-    images: [noimage],
+    thumbnail: akbid,
+    images: [akbid],
     stack: ["Vue", "Tailwind CSS", "Golang", "REST API"],
     description:
       "Developed the official website of Akademi Kebidanan Langkat as a digital information platform featuring institutional profiles, news, events, galleries, announcements, and new student admission information. The website was designed to be responsive and easily managed through a Content Management System (CMS), enabling administrators to efficiently update information while improving accessibility for the public. Managed the deployment of multiple websites in VPS/Linux environments, including application publishing, service configuration, monitoring, and troubleshooting to ensure reliable and optimal service availability.",
@@ -76,8 +79,8 @@ const projects = [
   {
     id: "Library Kebidanan Langkat",
     title: "Library Kebidanan Langkat",
-    thumbnail: noimage,
-    images: [noimage],
+    thumbnail: library,
+    images: [library],
     stack: ["Codeigniter 4", "Bootstrap 5", "Mysql"],
     description:
       "Developed the Akademi Kebidanan Langkat Library Website to centrally manage book collections, journals, practical equipment, and library facilities and infrastructure. Implemented an online borrowing system that enables students to request and borrow library assets while helping staff accurately monitor inventory, borrowing history, and returns. Digitized library administration processes through inventory tracking and borrowing transaction management, improving data accuracy, operational efficiency, and ease of monitoring for library staff.",
@@ -87,8 +90,8 @@ const projects = [
   {
     id: "Tracer Study Kebidanan Langkat",
     title: "Tracer Study Kebidanan Langkat",
-    thumbnail: noimage,
-    images: [noimage],
+    thumbnail: tracer,
+    images: [tracer],
     stack: ["Codeigniter 4", "Bootstrap 5", "Mysql"],
     description:
       "Developed the Akademi Kebidanan Langkat Tracer Study Website as a platform for collecting and managing graduate data and information regarding alumni after completing their education. The system records employment history, job relevance to their educational background, and alumni career development. Implemented an online questionnaire system and centralized alumni data management, enabling the institution to efficiently monitor, process, and analyze tracer study data. Digitized the tracer study process to support institutional evaluation and educational program improvement based on alumni career outcomes and workforce needs.",
