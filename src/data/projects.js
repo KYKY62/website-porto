@@ -12,6 +12,7 @@ import siap from "../assets/siap.webp";
 import tracer from "../assets/tracer-study.webp";
 import library from "../assets/library.webp";
 import akbid from "../assets/akbid.webp";
+import marketku from "../assets/marketku.webp";
 
 const projects = [
   {
@@ -124,11 +125,11 @@ const projects = [
   {
     id: "marketku",
     title: "MarketKu",
-    thumbnail: mybidan,
-    images: [mybidan],
+    thumbnail: marketku,
+    images: [marketku],
     stack: ["Flutter", "Public REST API", "Firebase"],
     description:
-      "Mobile application that provides a comprehensive point-of-sale (POS) solution, enabling buyers, owners, and partners to seamlessly manage transactions and payments.",
+      "Our Mobile POS application integrates Dijkstra's Algorithm for supply chain and delivery route optimization. This feature intelligently calculates the shortest and most efficient delivery route from the store checkout directly to the customer, saving time, reducing costs, and boosting customer satisfaction.",
     link: "https://github.com/KYKY62",
     download:
       "https://www.mediafire.com/file/5wcvylcjmy9o54c/MarketKu.apk/file",
