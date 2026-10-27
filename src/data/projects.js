@@ -1,6 +1,7 @@
 import multisite from "../assets/multisite.webp";
 import diskominfosuperapp from "../assets/diskominfosuperapp.webp";
 import langkatcctv from "../assets/cctv.webp";
+import petasakti from "../assets/petasakti.webp";
 import langkat from "../assets/portallangkat.webp";
 import stamet from "../assets/stamet.webp";
 import quran from "../assets/quran.webp";
@@ -42,7 +43,7 @@ const projects = [
     link: "https://github.com/KYKY62",
     download:
       "https://play.google.com/store/apps/details?id=go.id.langkatkab.diskominfostan&pcampaignid=web_share",
-    website: "https://diskominfostan.langkatkab.go.id/superapp/",
+    website: "https://diskominfostan.langkatkab.go.id",
   },
   {
     id: "Website Langkat",
@@ -54,6 +55,17 @@ const projects = [
       "Developed the official website of the Langkat Regency Government as a centralized digital information and public service portal, providing information on government activities, regional news, announcements, public services, and integrated access to websites of government agencies and public health centers. The platform also provides various digital services, including e-Lapor, licensing services, e-Pasar, e-SPPT Bapenda, JDIH, and information related to regional government and development. The website is designed to improve public access to government information and services, promote transparency, and support digital transformation in the administration of Langkat Regency.",
     link: "https://github.com/KYKY62",
     website: "https://langkatkab.go.id/",
+  },
+  {
+    id: "Peta Sakti",
+    title: "Peta Sakti",
+    thumbnail: petasakti,
+    images: [petasakti],
+    stack: ["Vue", "Tailwind CSS", "MapLibre GL", "REST API"],
+    description:
+      "PETA SAKTI: Built PETA SAKTI, a web platform for mapping the ICT assets of the Langkat Regency Government, displaying the distribution of assets per regional agency (OPD) on an interactive map so that leadership can monitor asset conditions visually and from a single place. Integrated the system with the IAMT/CMDB API to serve more than 18,500 detailed item records in real time, with filters by year and asset condition. Implemented Single Sign-On through IAMT with role-based access control, automatic session synchronization, and login attempt limiting, while every data change is logged under the user’s name for audit purposes. Optimized performance and data availability with a layered Redis caching strategy (live data, cache, and backup), so the map stays accessible even when the source API is slow or experiencing downtime.",
+    link: "https://github.com/KYKY62",
+    // website: "https://petasakti.langkatkab.go.id/",
   },
   {
     id: "Langkat CCTV",
