@@ -65,7 +65,7 @@ const projects = [
     description:
       "PETA SAKTI: Built PETA SAKTI, a web platform for mapping the ICT assets of the Langkat Regency Government, displaying the distribution of assets per regional agency (OPD) on an interactive map so that leadership can monitor asset conditions visually and from a single place. Integrated the system with the IAMT/CMDB API to serve more than 18,500 detailed item records in real time, with filters by year and asset condition. Implemented Single Sign-On through IAMT with role-based access control, automatic session synchronization, and login attempt limiting, while every data change is logged under the user’s name for audit purposes. Optimized performance and data availability with a layered Redis caching strategy (live data, cache, and backup), so the map stays accessible even when the source API is slow or experiencing downtime.",
     link: "https://github.com/KYKY62",
-    // website: "https://petasakti.langkatkab.go.id/",
+    website: "https://petasakti.langkatkab.go.id/",
   },
   {
     id: "Langkat CCTV",
