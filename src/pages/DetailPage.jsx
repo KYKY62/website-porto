@@ -1,10 +1,10 @@
-import { Link, Navigate, useLocation } from 'react-router-dom';
-import { Header, Footer } from '../components/RetroUI';
-import projects from '../data/projects';
-import { findProject, projectPath } from '../seo/paths';
-import { getImageProps } from '../utils/projectImages';
-import NotFoundPage from './NotFoundPage';
-import './DetailPage.css';
+import { Link, Navigate, useLocation } from "react-router-dom";
+import { Header, Footer } from "../components/RetroUI";
+import projects from "../data/projects";
+import { findProject, projectPath } from "../seo/paths";
+import { getImageProps } from "../utils/projectImages";
+import NotFoundPage from "./NotFoundPage";
+import "./DetailPage.css";
 
 function DetailPage() {
   const location = useLocation();
@@ -15,17 +15,29 @@ function DetailPage() {
   }
 
   if (location.pathname !== projectPath(project)) {
-    return <Navigate replace to={`${projectPath(project)}${location.search}${location.hash}`} />;
+    return (
+      <Navigate
+        replace
+        to={`${projectPath(project)}${location.search}${location.hash}`}
+      />
+    );
   }
 
   const actions = [];
   if (project.link) {
     actions.push({
-      label: 'View on GitHub',
+      label: "View on GitHub",
       href: project.link,
-      className: 'detail-link',
+      className: "detail-link",
       icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
           <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
           <polyline points="15 3 21 3 21 9" />
           <line x1="10" y1="14" x2="21" y2="3" />
@@ -35,11 +47,18 @@ function DetailPage() {
   }
   if (project.download) {
     actions.push({
-      label: 'Download App',
+      label: "Download App",
       href: project.download,
-      className: 'detail-link detail-link--outline',
+      className: "detail-link detail-link--outline",
       icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
           <polyline points="7 10 12 15 17 10" />
           <line x1="12" y1="15" x2="12" y2="3" />
@@ -49,11 +68,18 @@ function DetailPage() {
   }
   if (project.website) {
     actions.push({
-      label: 'Visit Website',
+      label: "Visit Website",
       href: project.website,
-      className: 'detail-link detail-link--outline',
+      className: "detail-link detail-link--outline",
       icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
           <circle cx="12" cy="12" r="10" />
           <line x1="2" y1="12" x2="22" y2="12" />
           <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
@@ -61,66 +87,115 @@ function DetailPage() {
       ),
     });
   }
+  if (project.youtube) {
+    actions.push({
+      label: "Watch Demo",
+      href: project.youtube,
+      className: "detail-link detail-link--outline",
+      icon: (
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
+          <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
+        </svg>
+      ),
+    });
+  }
 
   return (
-    <div id="top"><Header/><main className="detail-page">
-      <nav aria-label="Breadcrumb" className="breadcrumbs">
-        <Link to="/">Home</Link><span aria-hidden="true">/</span>
-        <Link to="/projects">Projects</Link><span aria-hidden="true">/</span>
-        <span aria-current="page">{project.title}</span>
-      </nav>
+    <div id="top">
+      <Header />
+      <main className="detail-page">
+        <nav aria-label="Breadcrumb" className="breadcrumbs">
+          <Link to="/">Home</Link>
+          <span aria-hidden="true">/</span>
+          <Link to="/projects">Projects</Link>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">{project.title}</span>
+        </nav>
 
-      <div className="detail-container">
-        <div className="detail-card">
-          <div className="detail-hero-img">
-            <img {...getImageProps(project.images[0], { detail: true })} alt={`${project.title} application interface`} loading="eager" fetchPriority="high" />
-          </div>
-
-          <div className="detail-body">
-            <h1 className="detail-title">{project.title}</h1>
-
-            <div className="detail-stack">
-              {project.stack.map((tech) => (
-                <span key={tech}>{tech}</span>
-              ))}
+        <div className="detail-container">
+          <div className="detail-card">
+            <div className="detail-hero-img">
+              <img
+                {...getImageProps(project.images[0], { detail: true })}
+                alt={`${project.title} application interface`}
+                loading="eager"
+                fetchPriority="high"
+              />
             </div>
 
-            <p className="detail-desc">{project.description}</p>
+            <div className="detail-body">
+              <h1 className="detail-title">{project.title}</h1>
 
-            {project.images.length > 1 && (
-              <div className="detail-gallery">
-                {project.images.slice(1).map((img, i) => (
-                  <img key={i} {...getImageProps(img, { detail: true })} alt={`${project.title} additional screenshot ${i + 1}`} loading="lazy" />
+              <div className="detail-stack">
+                {project.stack.map((tech) => (
+                  <span key={tech}>{tech}</span>
                 ))}
               </div>
-            )}
 
-            {actions.length > 0 && (
-              <div className="detail-actions">
-                {actions.map((action) => (
-                  <a
-                    key={action.label}
-                    href={action.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={action.className}
-                  >
-                    {action.label}
-                    {action.icon}
-                  </a>
-                ))}
-              </div>
-            )}
+              <p className="detail-desc">{project.description}</p>
+
+              {project.images.length > 1 && (
+                <div className="detail-gallery">
+                  {project.images.slice(1).map((img, i) => (
+                    <img
+                      key={i}
+                      {...getImageProps(img, { detail: true })}
+                      alt={`${project.title} additional screenshot ${i + 1}`}
+                      loading="lazy"
+                    />
+                  ))}
+                </div>
+              )}
+
+              {actions.length > 0 && (
+                <div className="detail-actions">
+                  {actions.map((action) => (
+                    <a
+                      key={action.label}
+                      href={action.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={action.className}
+                    >
+                      {action.label}
+                      {action.icon}
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-      <section className="related-projects" aria-labelledby="related-heading">
-        <h2 id="related-heading">More projects</h2>
-        <ul>{projects.filter((item) => item.id !== project.id).sort((a, b) =>
-          b.stack.filter((tech) => project.stack.includes(tech)).length - a.stack.filter((tech) => project.stack.includes(tech)).length
-        ).slice(0, 3).map((item) => <li key={item.id}><Link to={projectPath(item)}>{item.title} ↗</Link></li>)}</ul>
-      </section>
-    </main><Footer/></div>
+        <section className="related-projects" aria-labelledby="related-heading">
+          <h2 id="related-heading">More projects</h2>
+          <ul>
+            {projects
+              .filter((item) => item.id !== project.id)
+              .sort(
+                (a, b) =>
+                  b.stack.filter((tech) => project.stack.includes(tech))
+                    .length -
+                  a.stack.filter((tech) => project.stack.includes(tech)).length,
+              )
+              .slice(0, 3)
+              .map((item) => (
+                <li key={item.id}>
+                  <Link to={projectPath(item)}>{item.title} ↗</Link>
+                </li>
+              ))}
+          </ul>
+        </section>
+      </main>
+      <Footer />
+    </div>
   );
 }
 
