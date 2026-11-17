@@ -14,6 +14,7 @@ import tracer from "../assets/tracer-study.webp";
 import library from "../assets/library.webp";
 import akbid from "../assets/akbid.webp";
 import marketku from "../assets/marketku.webp";
+import siakad from "../assets/siakad_akademi_kebidanan_langkat.webp";
 
 const projects = [
   {
@@ -89,6 +90,17 @@ const projects = [
       "Developed the official website of Akademi Kebidanan Langkat as a digital information platform featuring institutional profiles, news, events, galleries, announcements, and new student admission information. The website was designed to be responsive and easily managed through a Content Management System (CMS), enabling administrators to efficiently update information while improving accessibility for the public. Managed the deployment of multiple websites in VPS/Linux environments, including application publishing, service configuration, monitoring, and troubleshooting to ensure reliable and optimal service availability.",
     link: "https://github.com/KYKY62",
     website: "https://akbidlangkat.ac.id/",
+  },
+  {
+    id: "SIAKAD Akademi Kebidanan Langkat",
+    title: "SIAKAD Akademi Kebidanan Langkat",
+    thumbnail: siakad,
+    images: [siakad],
+    stack: ["Next JS", "Tailwind CSS", "REST API"],
+    description:
+      "Developed and implemented the Academic Information System (SIAKAD) for Akademi Kebidanan Langkat as an integrated digital platform to manage academic administration and student information. The system provides essential academic services, including student data management, lecturer information, course management, class scheduling, academic records, grades, attendance, and other academic administration processes. Designed with a responsive and user-friendly interface to improve accessibility for students, lecturers, and administrative staff. Implemented a Content Management System (CMS) and administrative features to facilitate efficient data management, streamline academic workflows, and enhance institutional operational efficiency. Managed system deployment in VPS/Linux environments, including application publishing, server configuration, database management, monitoring, maintenance, and troubleshooting to ensure reliable, secure, and optimal service availability.",
+    link: "https://github.com/KYKY62",
+    website: "https://siakad.akbidlangkat.ac.id/",
   },
   {
     id: "Library Kebidanan Langkat",

@@ -12,9 +12,10 @@ import image9 from "../assets/petasakti.webp";
 import image10 from "../assets/portallangkat.webp";
 import image11 from "../assets/quizkuy.webp";
 import image12 from "../assets/quran.webp";
-import image13 from "../assets/siap.webp";
-import image14 from "../assets/stamet.webp";
-import image15 from "../assets/tracer-study.webp";
+import image13 from "../assets/siakad_akademi_kebidanan_langkat.webp";
+import image14 from "../assets/siap.webp";
+import image15 from "../assets/stamet.webp";
+import image16 from "../assets/tracer-study.webp";
 
 export default {
   [image0]: {"sourceFile": "akbid.webp", "sourceHash": "0d3edb5332", "width": 1672, "height": 941, "medium": "/media/akbid-0d3edb5332-960.webp", "large": "/media/akbid-0d3edb5332-1440.webp", "srcSet": "/media/akbid-0d3edb5332-480.webp 480w, /media/akbid-0d3edb5332-960.webp 960w, /media/akbid-0d3edb5332-1440.webp 1440w", "social": "/social/akbid-0d3edb5332.jpg"},
@@ -30,7 +31,8 @@ export default {
   [image10]: {"sourceFile": "portallangkat.webp", "sourceHash": "40905fb34c", "width": 1672, "height": 941, "medium": "/media/portallangkat-40905fb34c-960.webp", "large": "/media/portallangkat-40905fb34c-1440.webp", "srcSet": "/media/portallangkat-40905fb34c-480.webp 480w, /media/portallangkat-40905fb34c-960.webp 960w, /media/portallangkat-40905fb34c-1440.webp 1440w", "social": "/social/portallangkat-40905fb34c.jpg"},
   [image11]: {"sourceFile": "quizkuy.webp", "sourceHash": "c825788c6f", "width": 4096, "height": 3072, "medium": "/media/quizkuy-c825788c6f-960.webp", "large": "/media/quizkuy-c825788c6f-1440.webp", "srcSet": "/media/quizkuy-c825788c6f-480.webp 480w, /media/quizkuy-c825788c6f-960.webp 960w, /media/quizkuy-c825788c6f-1440.webp 1440w", "social": "/social/quizkuy-c825788c6f.jpg"},
   [image12]: {"sourceFile": "quran.webp", "sourceHash": "1287491b2c", "width": 4096, "height": 3072, "medium": "/media/quran-1287491b2c-960.webp", "large": "/media/quran-1287491b2c-1440.webp", "srcSet": "/media/quran-1287491b2c-480.webp 480w, /media/quran-1287491b2c-960.webp 960w, /media/quran-1287491b2c-1440.webp 1440w", "social": "/social/quran-1287491b2c.jpg"},
-  [image13]: {"sourceFile": "siap.webp", "sourceHash": "b1acd9aaee", "width": 4096, "height": 3072, "medium": "/media/siap-b1acd9aaee-960.webp", "large": "/media/siap-b1acd9aaee-1440.webp", "srcSet": "/media/siap-b1acd9aaee-480.webp 480w, /media/siap-b1acd9aaee-960.webp 960w, /media/siap-b1acd9aaee-1440.webp 1440w", "social": "/social/siap-b1acd9aaee.jpg"},
-  [image14]: {"sourceFile": "stamet.webp", "sourceHash": "7a1f134719", "width": 4096, "height": 3072, "medium": "/media/stamet-7a1f134719-960.webp", "large": "/media/stamet-7a1f134719-1440.webp", "srcSet": "/media/stamet-7a1f134719-480.webp 480w, /media/stamet-7a1f134719-960.webp 960w, /media/stamet-7a1f134719-1440.webp 1440w", "social": "/social/stamet-7a1f134719.jpg"},
-  [image15]: {"sourceFile": "tracer-study.webp", "sourceHash": "c17d194061", "width": 1672, "height": 941, "medium": "/media/tracer-study-c17d194061-960.webp", "large": "/media/tracer-study-c17d194061-1440.webp", "srcSet": "/media/tracer-study-c17d194061-480.webp 480w, /media/tracer-study-c17d194061-960.webp 960w, /media/tracer-study-c17d194061-1440.webp 1440w", "social": "/social/tracer-study-c17d194061.jpg"},
+  [image13]: {"sourceFile": "siakad_akademi_kebidanan_langkat.webp", "sourceHash": "859cd06a05", "width": 1672, "height": 941, "medium": "/media/siakad_akademi_kebidanan_langkat-859cd06a05-960.webp", "large": "/media/siakad_akademi_kebidanan_langkat-859cd06a05-1440.webp", "srcSet": "/media/siakad_akademi_kebidanan_langkat-859cd06a05-480.webp 480w, /media/siakad_akademi_kebidanan_langkat-859cd06a05-960.webp 960w, /media/siakad_akademi_kebidanan_langkat-859cd06a05-1440.webp 1440w", "social": "/social/siakad_akademi_kebidanan_langkat-859cd06a05.jpg"},
+  [image14]: {"sourceFile": "siap.webp", "sourceHash": "b1acd9aaee", "width": 4096, "height": 3072, "medium": "/media/siap-b1acd9aaee-960.webp", "large": "/media/siap-b1acd9aaee-1440.webp", "srcSet": "/media/siap-b1acd9aaee-480.webp 480w, /media/siap-b1acd9aaee-960.webp 960w, /media/siap-b1acd9aaee-1440.webp 1440w", "social": "/social/siap-b1acd9aaee.jpg"},
+  [image15]: {"sourceFile": "stamet.webp", "sourceHash": "7a1f134719", "width": 4096, "height": 3072, "medium": "/media/stamet-7a1f134719-960.webp", "large": "/media/stamet-7a1f134719-1440.webp", "srcSet": "/media/stamet-7a1f134719-480.webp 480w, /media/stamet-7a1f134719-960.webp 960w, /media/stamet-7a1f134719-1440.webp 1440w", "social": "/social/stamet-7a1f134719.jpg"},
+  [image16]: {"sourceFile": "tracer-study.webp", "sourceHash": "c17d194061", "width": 1672, "height": 941, "medium": "/media/tracer-study-c17d194061-960.webp", "large": "/media/tracer-study-c17d194061-1440.webp", "srcSet": "/media/tracer-study-c17d194061-480.webp 480w, /media/tracer-study-c17d194061-960.webp 960w, /media/tracer-study-c17d194061-1440.webp 1440w", "social": "/social/tracer-study-c17d194061.jpg"},
 };
