@@ -3,30 +3,12 @@ import projects from "../data/projects";
 import { Header, Footer, ProjectCard, cvUrl } from "../components/RetroUI";
 import "./HomePage.css";
 import TypingName from "../components/TypingName";
-
-const workExperience = [
-  {
-    role: "Tenaga Ahli Programmer",
-    company: "Diskominfo Langkat",
-    period: "Jan 2025 – Sekarang",
-    location: "Langkat",
-    current: true,
-  },
-  {
-    role: "Fullstack Developer",
-    company: "Akademi Bidan Langkat",
-    period: "Jul 2025 – Sept 2025",
-    location: "Langkat",
-  },
-  {
-    role: "Flutter Developer",
-    company: "BMKG Wilayah 1 Medan",
-    period: "Sept 2023 – Des 2023",
-    location: "Medan",
-  },
-];
+import workExperience from "../data/experience";
+import { localized } from "../i18n/locales";
+import { useLocale } from "../i18n/useLocale";
 
 function PixelComputer() {
+  const { t } = useLocale();
   return (
     <div className="computer-scene">
       <div className="scene-label">PERSONAL_WORKSPACE.EXE</div>
@@ -34,7 +16,7 @@ function PixelComputer() {
         className="pixel-computer"
         viewBox="0 0 320 270"
         role="img"
-        aria-label="Retro pixel computer displaying a code prompt"
+        aria-label={t.home.computerAlt}
         shapeRendering="crispEdges"
       >
         <g fill="currentColor">
@@ -61,6 +43,7 @@ function PixelComputer() {
   );
 }
 export default function HomePage() {
+  const { locale, t, to } = useLocale();
   return (
     <div id="top">
       <Header />
@@ -73,13 +56,14 @@ export default function HomePage() {
             <TypingName />
             <p className="role">Full-Stack Developer</p>
             <p className="intro-description">
-              Turning ideas into things you can use.
-              <br />I build thoughtful web & mobile experiences,
-              <br className="desktop-break" /> one pixel at a time.
+              {t.home.introLine1}
+              <br />
+              {t.home.introLine2}
+              <br className="desktop-break" /> {t.home.introLine3}
             </p>
             <div className="hero-actions">
-              <Link to="/projects" className="pixel-button primary">
-                Explore projects <span aria-hidden="true">↗</span>
+              <Link to={to("/projects")} className="pixel-button primary">
+                {t.home.explore} <span aria-hidden="true">↗</span>
               </Link>
               <a
                 className="pixel-button"
@@ -87,7 +71,7 @@ export default function HomePage() {
                 target="_blank"
                 rel="noreferrer"
               >
-                Download CV <span aria-hidden="true">↓</span>
+                {t.home.downloadCv} <span aria-hidden="true">↓</span>
               </a>
             </div>
           </div>
@@ -106,12 +90,11 @@ export default function HomePage() {
         <section
           className="work-experience"
           aria-labelledby="experience-heading"
-          lang="id"
         >
           <div className="section-heading">
             <div>
               <p className="eyebrow">01 / Work experience</p>
-              <h2 id="experience-heading">Pengalaman kerja.</h2>
+              <h2 id="experience-heading">{t.home.experienceHeading}</h2>
             </div>
           </div>
           <ol className="experience-list">
@@ -121,14 +104,14 @@ export default function HomePage() {
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <div className="experience-info">
-                  <h3>{experience.role}</h3>
+                  <h3>{localized(experience.role, locale)}</h3>
                   <p>{experience.company}</p>
                 </div>
                 <div className="experience-meta">
-                  <p>{experience.period}</p>
+                  <p>{localized(experience.period, locale)}</p>
                   <p className="experience-location">
                     {experience.current && (
-                      <span className="experience-status">Aktif</span>
+                      <span className="experience-status">{t.home.current}</span>
                     )}
                     {experience.location}
                   </p>
@@ -141,10 +124,10 @@ export default function HomePage() {
           <div className="section-heading">
             <div>
               <p className="eyebrow">02 / Selected work</p>
-              <h2>Made with intention.</h2>
+              <h2>{t.home.selectedHeading}</h2>
             </div>
-            <Link to="/projects">
-              All projects ({String(projects.length).padStart(2, "0")}) ↗
+            <Link to={to("/projects")}>
+              {t.home.allProjects(String(projects.length).padStart(2, "0"))} ↗
             </Link>
           </div>
           <div className="project-grid">
@@ -159,9 +142,9 @@ export default function HomePage() {
         </section>
         <section className="contact-line">
           <p>
-            Have an idea in mind?
+            {t.home.contactLine1}
             <br />
-            <span>Let's make it real.</span>
+            <span>{t.home.contactLine2}</span>
           </p>
           <a
             href="https://github.com/KYKY62"
@@ -169,7 +152,7 @@ export default function HomePage() {
             rel="noreferrer"
             className="pixel-button"
           >
-            Find me on GitHub ↗
+            {t.home.github} ↗
           </a>
         </section>
       </main>

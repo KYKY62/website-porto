@@ -44,7 +44,12 @@ export async function createSeoServer(directory = path.resolve('dist')) {
           catch (error) { if (['ENOENT', 'EISDIR', 'ENOTDIR'].includes(error.code)) status = 404; else throw error; }
         }
       } else status = 404;
-      if (status === 404) { filename = '404.html'; content = await readFile(path.join(directory, filename)); }
+      if (status === 404) {
+        // Locale-prefixed URLs (e.g. /en/...) get that locale's 404 page.
+        const prefix = Object.keys(manifest.notFound || {}).find((item) => pathname.toLowerCase().startsWith(item));
+        filename = prefix ? manifest.notFound[prefix] : '404.html';
+        content = await readFile(path.join(directory, filename));
+      }
       const headers = { 'Content-Type': types[path.extname(filename)] || 'application/octet-stream',
         'X-Content-Type-Options': 'nosniff',
         'Cache-Control': status === 404 ? 'no-store' : /^\/(assets|media)\//.test(pathname)

@@ -18,13 +18,21 @@ npm run lint
 npm run preview
 ```
 
-`build` menghasilkan `dist/` dan `.vercel/output/`, termasuk 16 halaman publik saat ini, sitemap, robots, redirect URL lama, serta halaman HTTP 404. `preview` menjalankan server lokal di port 4173 yang mengikuti aturan status/redirect produksi; development Vite tidak digunakan untuk menilai HTTP SEO.
+`build` menghasilkan `dist/` dan `.vercel/output/`, termasuk semua halaman publik dalam dua bahasa, sitemap, robots, redirect URL lama, serta halaman HTTP 404. `preview` menjalankan server lokal di port 4173 yang mengikuti aturan status/redirect produksi; development Vite tidak digunakan untuk menilai HTTP SEO.
 
 Domain default: `https://rizkyakbar.net`. Salin `.env.example` ke `.env.local` untuk mengganti `VITE_SITE_URL` sebelum build. Preview Vercel otomatis noindex; produksi harus indexable.
 
+## Bahasa (Indonesia & Inggris)
+
+Bahasa Indonesia adalah default dan tidak memakai prefix (`/`, `/projects`, `/project/<slug>`). Bahasa Inggris berada di bawah `/en` (`/en`, `/en/projects`, `/en/project/<slug>`). Tombol `ID / EN` di header mengarah ke halaman yang sama dalam bahasa lain. Setiap halaman memuat `<html lang>`, `hreflang` (id, en, x-default), dan `og:locale` yang sesuai.
+
+- Teks UI: `src/i18n/messages.js` (key yang sama untuk `id` dan `en`).
+- Konten dwibahasa: field berbentuk `{ id: '...', en: '...' }`, misalnya `description` di `src/data/projects.js` dan `role`/`period` di `src/data/experience.js`. Field berupa string biasa dipakai apa adanya di kedua bahasa.
+- Label bergaya retro (`PERSONAL_WORKSPACE.EXE`, `SYSTEM ONLINE`, eyebrow section, `PROJECT_01`, `Loading....`) sengaja tetap berbahasa Inggris di kedua versi.
+
 ## Memperbarui portfolio
 
-Konten berada di `src/data/projects.js`. Tambahkan field `seo` opsional untuk mengganti title, description, canonicalUrl, ogImage, ogTitle, dan ogDescription. Sitemap dibuat ulang dari data saat build. Screenshot baru/berubah memerlukan:
+Konten berada di `src/data/projects.js`. Isi `description` dalam dua bahasa (`{ id, en }`). Tambahkan field `seo` opsional (nilainya boleh string atau `{ id, en }`) untuk mengganti title, description, canonicalUrl, ogImage, ogTitle, dan ogDescription. Sitemap dibuat ulang dari data saat build. Screenshot baru/berubah memerlukan:
 
 ```sh
 npm run images:optimize

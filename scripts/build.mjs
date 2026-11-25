@@ -25,7 +25,7 @@ function generatedFolder(relative) {
 
 await rm(generatedFolder('.seo-build'), { recursive: true, force: true });
 await build({ define, build: { ssr: 'src/entry-server.jsx', outDir: '.seo-build', ssrEmitAssets: true, copyPublicDir: false } });
-const { render, publicPages, legacyRedirects, site, imageVariants } = await import(pathToFileURL(path.join(root, '.seo-build/entry-server.js')).href);
+const { render, publicPages, notFoundPages, legacyRedirects, site, imageVariants } = await import(pathToFileURL(path.join(root, '.seo-build/entry-server.js')).href);
 for (const image of Object.values(imageVariants)) {
   const source = await readFile(path.join(root, 'src/assets', image.sourceFile));
   if (createHash('sha256').update(source).digest('hex').slice(0, 10) !== image.sourceHash) {
@@ -49,9 +49,12 @@ for (const page of rendered) {
     throw new Error(`${page.url} has an invalid canonical target: ${canonical}`);
   }
 }
-const canonicalUrls = rendered.filter((page) => page.seo.indexable && page.seo.canonical === new URL(page.url, site.origin).href)
-  .map((page) => page.seo.canonical);
-const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${canonicalUrls.map((url) => `  <url><loc>${escapeXml(url)}</loc></url>`).join('\n')}\n</urlset>\n`;
+const canonicalPages = rendered.filter((page) => page.seo.indexable && page.seo.canonical === new URL(page.url, site.origin).href);
+const canonicalUrls = canonicalPages.map((page) => page.seo.canonical);
+// Each URL lists its language alternates (hreflang) so search engines pair the ID and EN versions.
+const sitemapEntry = (page) => `  <url><loc>${escapeXml(page.seo.canonical)}</loc>${page.seo.alternates
+  .map((item) => `<xhtml:link rel="alternate" hreflang="${item.hreflang}" href="${escapeXml(item.href)}"/>`).join('')}</url>`;
+const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${canonicalPages.map(sitemapEntry).join('\n')}\n</urlset>\n`;
 // Do not invent lastmod dates: they must reflect genuine content modifications.
 const robots = `User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /dashboard\nDisallow: /login\nDisallow: /api\n\nSitemap: ${site.origin}/sitemap.xml\n`;
 await writeFile(path.join(root, 'public/sitemap.xml'), sitemap);
@@ -59,18 +62,25 @@ await writeFile(path.join(root, 'public/robots.txt'), robots);
 
 await build({ define });
 const template = await readFile(path.join(root, 'dist/index.html'), 'utf8');
-if (!template.includes('<!--seo:start-->') || !template.includes('<div id="root"></div>')) throw new Error('Missing prerender placeholders.');
+if (!template.includes('<!--seo:start-->') || !template.includes('<div id="root"></div>') || !/<html lang="[^"]*">/.test(template)) {
+  throw new Error('Missing prerender placeholders.');
+}
+const notFound = notFoundPages();
 const routes = {};
-for (const page of [...rendered, { url: '/404', ...render('/404') }]) {
+for (const page of [...rendered, ...notFound.map((url) => ({ url, ...render(url) }))]) {
   const file = page.url === '/' ? 'index.html' : `${page.url.slice(1)}.html`;
-  const html = template.replace(/<!--seo:start-->[\s\S]*?<!--seo:end-->/, () => page.head)
+  const html = template.replace(/<html lang="[^"]*">/, () => `<html lang="${page.seo.lang}">`)
+    .replace(/<!--seo:start-->[\s\S]*?<!--seo:end-->/, () => page.head)
     .replace('<div id="root"></div>', () => `<div id="root" data-prerendered="true">${page.body}</div>`);
   await mkdir(path.dirname(path.join(root, 'dist', file)), { recursive: true });
   await writeFile(path.join(root, 'dist', file), html);
-  if (page.url !== '/404') routes[page.url] = file;
+  if (!notFound.includes(page.url)) routes[page.url] = file;
 }
 const redirects = Object.fromEntries(legacyRedirects().map(({ from, to }) => [from, to]));
-const manifest = { origin: site.origin, indexable: site.indexable, routes, redirects };
+// Unknown URLs under a locale prefix (e.g. /en/) get that locale's 404 page.
+const notFoundByPrefix = Object.fromEntries(notFound.filter((url) => url !== '/404')
+  .map((url) => [url.replace(/404$/, ''), url.slice(1) + '.html']));
+const manifest = { origin: site.origin, indexable: site.indexable, routes, redirects, notFound: notFoundByPrefix };
 await writeFile(path.join(root, 'dist/.routes.json'), JSON.stringify(manifest, null, 2));
 
 // Build Output API: explicit pages and a real HTTP 404, never a catch-all SPA rewrite.
@@ -96,8 +106,10 @@ const vercelRoutes = [
     headers: { 'Cache-Control': 'public, max-age=0, must-revalidate' } })),
   // Case variants resolve in one hop after the exact canonical paths above.
   ...pages.filter((url) => url !== '/').map((url) => ({ ...redirectRule(`^${escapeRegex(url)}/?$`, url), caseSensitive: false })),
+  ...Object.values(notFoundByPrefix).map((file) => ({ src: `^/${escapeRegex(file.replace(/\.html$/, ''))}(?:\\.html)?/?$`, dest: `/${file}`, status: 404, headers: { 'X-Robots-Tag': 'noindex, follow', 'Cache-Control': 'no-store' } })),
   { src: '^/404(?:\\.html)?/?$', dest: '/404.html', status: 404, headers: { 'X-Robots-Tag': 'noindex, follow', 'Cache-Control': 'no-store' } },
   { handle: 'filesystem' },
+  ...Object.entries(notFoundByPrefix).map(([prefix, file]) => ({ src: `^${escapeRegex(prefix)}(.*)`, dest: `/${file}`, status: 404, headers: { 'X-Robots-Tag': 'noindex, follow', 'Cache-Control': 'no-store' } })),
   { src: '/(.*)', dest: '/404.html', status: 404, headers: { 'X-Robots-Tag': 'noindex, follow', 'Cache-Control': 'no-store' } },
 ];
 await writeFile(path.join(output, 'config.json'), JSON.stringify({ version: 3, routes: vercelRoutes }, null, 2));

@@ -5,14 +5,11 @@ if (parsedUrl.protocol !== 'https:' || parsedUrl.pathname !== '/' || parsedUrl.s
   throw new Error('VITE_SITE_URL must be an HTTPS origin without a path, query, or credentials.');
 }
 
+// Localized titles and descriptions live in src/i18n/messages.js (seo.*).
 export const site = {
   origin: parsedUrl.origin,
   name: 'Rizky Akbar Siregar',
-  title: 'Rizky Akbar Siregar | Full-Stack Developer in Indonesia',
-  description: 'Explore Rizky Akbar Siregar’s web and mobile development portfolio, including Laravel, Vue, Flutter, and public service projects in Langkat and Medan.',
   image: '/social/portfolio.jpg',
-  language: 'en',
-  locale: 'en_US',
   indexable: import.meta.env?.VITE_INDEXABLE !== 'false',
 };
 

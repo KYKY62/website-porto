@@ -56,6 +56,29 @@ test('Every public page has unique metadata, one H1, crawlable content and local
   }
 });
 
+test('Indonesian is the default at the root, English lives under /en, with reciprocal hreflang', async () => {
+  const routes = Object.keys(manifest.routes);
+  const english = routes.filter((route) => /^\/en(?:\/|$)/.test(route));
+  assert.equal(english.length * 2, routes.length, 'every Indonesian page has an English twin');
+  const alternatesOf = (html) => Object.fromEntries([...html.matchAll(/<link[^>]+rel="alternate"[^>]+hreflang="([^"]+)"[^>]+href="([^"]+)"/g)]
+    .map((match) => [match[1], decode(match[2])]));
+  for (const route of routes) {
+    const html = await readFile(path.join(directory, manifest.routes[route]), 'utf8');
+    const lang = english.includes(route) ? 'en' : 'id';
+    const twin = lang === 'en' ? route.replace(/^\/en/, '') || '/' : (route === '/' ? '/en' : `/en${route}`);
+    assert.match(html, new RegExp(`<html lang="${lang}">`), `${route}: html lang`);
+    assert.equal(meta(html, 'og:locale'), lang === 'en' ? 'en_US' : 'id_ID', `${route}: og:locale`);
+    const indonesian = lang === 'id' ? route : twin;
+    assert.deepEqual(alternatesOf(html), {
+      id: new URL(indonesian, manifest.origin).href,
+      en: new URL(lang === 'en' ? route : twin, manifest.origin).href,
+      'x-default': new URL(indonesian, manifest.origin).href,
+    }, `${route}: hreflang alternates`);
+    const switchLink = new RegExp(`<a hrefLang="${lang === 'en' ? 'id' : 'en'}"[^>]*href="${twin}"`, 'i');
+    assert.match(html, switchLink, `${route}: language switch links to ${twin}`);
+  }
+});
+
 test('Sitemap and robots use the same canonical origin and only public routes', async () => {
   const sitemap = await fetch(`${origin}/sitemap.xml`);
   assert.equal(sitemap.status, 200);
@@ -99,6 +122,18 @@ test('Unknown routes return HTTP 404 and noindex, including missing project IDs'
     assert.match(meta(html, 'robots'), /noindex/);
     assert.equal(canonical(html), '');
     assert.equal((html.match(/<h1\b/g) || []).length, 1);
+    assert.match(html, new RegExp(`<html lang="${route.startsWith('/en/') ? 'en' : 'id'}">`), `${route}: 404 language`);
+  }
+});
+
+test('Unknown English routes return the English 404 page', async () => {
+  for (const route of ['/en/does-not-exist', '/en/project/does-not-exist', '/en/404', '/en/404.html']) {
+    const response = await fetch(`${origin}${route}`);
+    assert.equal(response.status, 404, route);
+    assert.match(response.headers.get('x-robots-tag'), /noindex/);
+    const html = await response.text();
+    assert.match(html, /<html lang="en">/, route);
+    assert.match(meta(html, 'robots'), /noindex/);
   }
 });
 

@@ -1,7 +1,9 @@
 import projects from "../data/projects";
 import { Header, Footer, ProjectCard } from "../components/RetroUI";
 import "./AllProjectsPage.css";
+import { useLocale } from "../i18n/useLocale";
 export default function AllProjectsPage() {
+  const { t } = useLocale();
   return (
     <div id="top">
       <Header />
@@ -11,8 +13,8 @@ export default function AllProjectsPage() {
             The project archive / {String(projects.length).padStart(2, "0")}{" "}
             entries
           </p>
-          <h1>Web &amp; mobile projects.</h1>
-          <p>A collection of web, mobile, and everything in between.</p>
+          <h1>{t.projects.heading}</h1>
+          <p>{t.projects.lead}</p>
         </div>
         <div className="project-grid">
           {projects.map((project, index) => (

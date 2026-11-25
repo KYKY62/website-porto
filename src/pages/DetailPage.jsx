@@ -4,21 +4,24 @@ import projects from "../data/projects";
 import { findProject, projectPath } from "../seo/paths";
 import { getImageProps } from "../utils/projectImages";
 import NotFoundPage from "./NotFoundPage";
+import { localized } from "../i18n/locales";
+import { useLocale } from "../i18n/useLocale";
 import "./DetailPage.css";
 
 function DetailPage() {
   const location = useLocation();
+  const { locale, t, to } = useLocale();
   const project = findProject(projects, location.pathname);
 
   if (!project) {
     return <NotFoundPage />;
   }
 
-  if (location.pathname !== projectPath(project)) {
+  if (location.pathname !== projectPath(project, locale)) {
     return (
       <Navigate
         replace
-        to={`${projectPath(project)}${location.search}${location.hash}`}
+        to={`${projectPath(project, locale)}${location.search}${location.hash}`}
       />
     );
   }
@@ -26,7 +29,7 @@ function DetailPage() {
   const actions = [];
   if (project.link) {
     actions.push({
-      label: "View on GitHub",
+      label: t.detail.github,
       href: project.link,
       className: "detail-link",
       icon: (
@@ -47,7 +50,7 @@ function DetailPage() {
   }
   if (project.download) {
     actions.push({
-      label: "Download App",
+      label: t.detail.download,
       href: project.download,
       className: "detail-link detail-link--outline",
       icon: (
@@ -68,7 +71,7 @@ function DetailPage() {
   }
   if (project.website) {
     actions.push({
-      label: "Visit Website",
+      label: t.detail.website,
       href: project.website,
       className: "detail-link detail-link--outline",
       icon: (
@@ -89,7 +92,7 @@ function DetailPage() {
   }
   if (project.youtube) {
     actions.push({
-      label: "Watch Demo",
+      label: t.detail.demo,
       href: project.youtube,
       className: "detail-link detail-link--outline",
       icon: (
@@ -112,10 +115,10 @@ function DetailPage() {
     <div id="top">
       <Header />
       <main className="detail-page">
-        <nav aria-label="Breadcrumb" className="breadcrumbs">
-          <Link to="/">Home</Link>
+        <nav aria-label={t.detail.breadcrumb} className="breadcrumbs">
+          <Link to={to("/")}>{t.nav.home}</Link>
           <span aria-hidden="true">/</span>
-          <Link to="/projects">Projects</Link>
+          <Link to={to("/projects")}>{t.nav.projects}</Link>
           <span aria-hidden="true">/</span>
           <span aria-current="page">{project.title}</span>
         </nav>
@@ -125,7 +128,7 @@ function DetailPage() {
             <div className="detail-hero-img">
               <img
                 {...getImageProps(project.images[0], { detail: true })}
-                alt={`${project.title} application interface`}
+                alt={t.detail.heroAlt(project.title)}
                 loading="eager"
                 fetchPriority="high"
               />
@@ -140,7 +143,7 @@ function DetailPage() {
                 ))}
               </div>
 
-              <p className="detail-desc">{project.description}</p>
+              <p className="detail-desc">{localized(project.description, locale)}</p>
 
               {project.images.length > 1 && (
                 <div className="detail-gallery">
@@ -148,7 +151,7 @@ function DetailPage() {
                     <img
                       key={i}
                       {...getImageProps(img, { detail: true })}
-                      alt={`${project.title} additional screenshot ${i + 1}`}
+                      alt={t.detail.galleryAlt(project.title, i + 1)}
                       loading="lazy"
                     />
                   ))}
@@ -175,7 +178,7 @@ function DetailPage() {
           </div>
         </div>
         <section className="related-projects" aria-labelledby="related-heading">
-          <h2 id="related-heading">More projects</h2>
+          <h2 id="related-heading">{t.detail.more}</h2>
           <ul>
             {projects
               .filter((item) => item.id !== project.id)
@@ -188,7 +191,7 @@ function DetailPage() {
               .slice(0, 3)
               .map((item) => (
                 <li key={item.id}>
-                  <Link to={projectPath(item)}>{item.title} ↗</Link>
+                  <Link to={projectPath(item, locale)}>{item.title} ↗</Link>
                 </li>
               ))}
           </ul>
