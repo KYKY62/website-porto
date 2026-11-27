@@ -15,6 +15,7 @@ import library from "../assets/library.webp";
 import akbid from "../assets/akbid.webp";
 import marketku from "../assets/marketku.webp";
 import siakad from "../assets/siakad_akademi_kebidanan_langkat.webp";
+import lpg from "../assets/lpg_hub.webp";
 
 // description: { id, en }. Indonesian is the default locale.
 const projects = [
@@ -142,6 +143,18 @@ const projects = [
     },
     link: "https://github.com/KYKY62",
     website: "https://tracerstudy.akbidlangkat.ac.id/",
+  },
+  {
+    id: "lpg-hub",
+    title: "LPG Hub",
+    thumbnail: lpg,
+    images: [lpg],
+    stack: ["Flutter", "Firebase"],
+    description: {
+      id: "LPG Hub adalah aplikasi pencatatan pelanggan untuk pangkalan LPG. Setiap pangkalan bisa mendata pelanggannya lengkap dengan NIK, identitas, alamat, dan kategori sasaran, lalu melihat ringkasan serta komposisi pelanggan secara real-time. Admin dapat memantau seluruh jaringan pangkalan dan jumlah pelanggan di masing-masing pangkalan dari satu dashboard.",
+      en: "LPG Hub is a customer registration application for LPG stations. Each station can register its customers completely with NIK, identity, address, and target category, then view summaries and customer composition in real-time. Admin can monitor the entire network of stations and the number of customers at each station from a single dashboard.",
+    },
+    link: "https://github.com/KYKY62",
   },
   {
     id: "stamet-medan",
